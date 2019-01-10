@@ -85,11 +85,8 @@ function knownDeviceModels() {
 
             "hash": {
                 "hardware": [].concat(mechsHash94).concat(mechsHash2012)
-            },
-
-            "cipher": {
-                "hardware": [].concat(mechGostCipher)
             }
+
         };
 
     var ecpMechanisms = {
