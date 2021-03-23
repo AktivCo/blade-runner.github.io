@@ -72,11 +72,23 @@ function knownDeviceModels() {
     var mechsSignGost2001 = [plugin.PUBLIC_KEY_ALGORITHM_GOST3410_2001];
     var mechsSignRsa = [plugin.PUBLIC_KEY_ALGORITHM_RSA_512, plugin.PUBLIC_KEY_ALGORITHM_RSA_768, plugin.PUBLIC_KEY_ALGORITHM_RSA_1024,
         plugin.PUBLIC_KEY_ALGORITHM_RSA_1280, plugin.PUBLIC_KEY_ALGORITHM_RSA_1536, plugin.PUBLIC_KEY_ALGORITHM_RSA_1792, plugin.PUBLIC_KEY_ALGORITHM_RSA_2048];
+    var mechsSignRsa4096 = [plugin.PUBLIC_KEY_ALGORITHM_RSA_4096];
 
     var mechsHash94 = [plugin.HASH_TYPE_GOST3411_94];
     var mechsHash2012 = [plugin.HASH_TYPE_GOST3411_12_256, plugin.HASH_TYPE_GOST3411_12_512];
 
     var mechGostCipher = [plugin.CIPHER_ALGORITHM_GOST28147];
+
+    var ecp3_0Mechanisms = {
+            "sign": {
+                "hardware": [].concat(mechsSignGost2001).concat(mechsSignGost2012).concat(mechsSignRsa).concat(mechsSignRsa4096)
+            },
+
+            "hash": {
+                "hardware": [].concat(mechsHash94).concat(mechsHash2012)
+            }
+
+        };
 
     var ecp2_0Mechanisms = {
             "sign": {
@@ -102,6 +114,23 @@ function knownDeviceModels() {
                 "hardware": [].concat(mechGostCipher)
             }
         };
+
+
+    var RutokenEcp3_0 = function() {
+        this.mechanisms = ecp3_0Mechanisms;
+
+        this.features = {
+            "journal": true,
+            "customPin": true,
+            "externalAuth": true
+        };
+
+        this.speed = 1;
+
+        this.name = "Рутокен ЭЦП 3.0";
+    }
+    RutokenEcp3_0.prototype = new RutokenModel();
+    knownDevices.push(new RutokenEcp3_0());
 
     var RutokenEcp2_0 = function() {
         this.mechanisms = ecp2_0Mechanisms;
